@@ -13,6 +13,10 @@ from django.utils.translation import ugettext_lazy as _
 class PostfixDomain(models.Model):
     """
     Manage postfix virtual domains
+    
+    in your postfix vhosts configuration:
+    query = SELECT name FROM django_postfix_postfixdomain;
+    
     """
     class Meta:
         verbose_name = _("Domain")
@@ -28,6 +32,12 @@ class PostfixDomain(models.Model):
 class PostfixMailbox(models.Model):
     """
     Manage postfix virtual mailboxes
+    
+    in your postfix vmaps configuration:
+    query = SELECT domain.name || '/' || mailbox.name || '/' \
+            FROM django_postfix_postfixmailbox as mailbox, django_postfix_postfixdomain as domain  \
+            WHERE mailbox.name='%u' AND domain.name='%d';
+            
     """
     class Meta:
         verbose_name = _("Mailbox")
