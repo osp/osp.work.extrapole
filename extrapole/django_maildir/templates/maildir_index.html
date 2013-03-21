@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+{% for message in messages %}
+<h4>{{message.subject}}</h4>
+<div class="tags">
+    {% for tag in message.tags %}
+    <span>{{tag}}</span>
+    {% endfor %}
+</div> 
+<div>{{message.body}}</div>
+{% endfor %}
+</body>
+</html>
