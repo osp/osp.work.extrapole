@@ -45,7 +45,7 @@ class Message(object):
         ret['tags'] = []
         for t in subject_list:
             ret['tags'].append(t)
-        ret['body'] = message.get_paylod()
+        ret['body'] = message.get_payload()
         return ret 
         
                 
