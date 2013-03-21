@@ -54,7 +54,7 @@ class Message(object):
         for domain in self.maildirs:
             for mailbox in self.maildirs[domain]:
                 md = self.maildirs[domain][mailbox]
-                for (k,m) in mail.iteritems():
+                for (k,m) in md.iteritems():
                     mp = self.message_prepare(m)
                     mp['mailbox'] = '%s@%s'%(mailbox, domain)
                     mp['key'] = k
