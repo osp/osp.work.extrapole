@@ -27,10 +27,11 @@ class Message(object):
     def __init__(self):
         self.maildirs = {}
         
-        mailboxes = PostfixMailbox.object.all()
+        mailboxes = PostfixMailbox.objects.all()
         for mb in mailboxes:
             try:
                 mb_path = os.path.join(POSTFIX_VIRTUAL_MAILBOX_BASE, mb.domain.name, mb.name)
+                print 'Try to MD: %s'%mb_path
                 if mb.domain.name not in self.maildirs:
                     self.maildirs[mb.domain.name] = {}
                 self.maildirs[mb.domain.name][mb.name] = Maildir(mb_path, factory=None, create=False)
@@ -48,7 +49,7 @@ class Message(object):
         return ret 
         
                 
-    def get_all():
+    def get_all(self):
         ret = []
         for domain in self.maildirs:
             for mailbox in self.maildirs[domain]:
