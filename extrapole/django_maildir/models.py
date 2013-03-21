@@ -40,7 +40,7 @@ class Message(object):
                 
     def message_prepare(self, message):
         ret = {}
-        subject_list = message.get_all('Subject').split('#')
+        subject_list = message.get('Subject', 'No Subject').split('#')
         ret['subject'] = subject_list.pop(0)
         ret['tags'] = []
         for t in subject_list:
