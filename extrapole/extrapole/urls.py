@@ -8,6 +8,9 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'extrapole.views.home', name='home'),
     # url(r'^extrapole/', include('extrapole.foo.urls')),
+    
+    
+    url(r'^maildir/', include('django_maildir.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
