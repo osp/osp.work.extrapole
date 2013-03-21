@@ -40,7 +40,9 @@ class PostfixMailbox(models.Model):
     
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Project, self).save(force_insert, force_update) 
+        super(PostfixMailbox, self).save(force_insert, force_update) 
         
     def __unicode__(self):
         return '%s@%s'%(self.name, self.domain.name)
+        
+        
