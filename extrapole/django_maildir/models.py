@@ -15,7 +15,7 @@ from mailbox import Maildir, MaildirMessage
 import logging
 logger = logging.getLogger(__name__)
 
-from django_postfix import PostfixMailbox
+from django_postfix.models import PostfixMailbox
 from settings import POSTFIX_VIRTUAL_MAILBOX_BASE
 
 
