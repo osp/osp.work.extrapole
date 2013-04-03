@@ -1,91 +1,145 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
+
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>Extrapole</title>
 <link href='http://fonts.googleapis.com/css?family=News+Cycle:400,700' rel='stylesheet' type='text/css'>
+
 <style>
-.text {
-    font-size:1em;
-    font-family: 'News Cycle', sans-serif;
+ 
+body {
+    margin:10px 20px 20px 20px;
     }
-.mail {
-float:right;
+    
+.box, .mail, .presentation, .agenda {
 border:1px;
 border-style:solid;
 border-color:#ddd;
-margin-bottom:-1px;
+margin:0px 5px -1px 5px;
+padding:0px 10px 10px 10px;
+    }
+
+.logo {
+    margin:0px 0px 32px -6px;
+    }
+        
+.mail {
+    float:right;
     }
     
-    .bg {
-        float:left;
-        border:1px;
-        border-style:solid;
-        border-color:#ddd;
-        margin-bottom:-1px;
-        }
+.presentation {
+    float:left;
+    width:450px;
+    height:500px;
+    }
         
+.agenda {
+    float:left;
+    height:600px;
+    }
+
+.media {
+    margin:10px 0px 0px 0px;
+    }
+        
+h1, h2, p, a, .text, .recipient, .date {
+    font-family: 'News Cycle', sans-serif;
+    font-size:1em;
+    font-weight: 400;
+    line-height:1.15em;
+    color:black;
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0.2em;
+    }
+        
+h1 {
+    font-size:1.8em;
+    }
+
+h2 {
+    font-size:1.5em;
+    -webkit-margin-before: 0.2em;
+    }
+    
 ul {
 list-style-type: none;
 padding:0px 0px 0px 10px;
     }
+    
 ul li:before {
 content: "";
 margin:0px 0px 0px -20px;
 font-size:1em;
 color:#ddd;
     }
+    
 li {
-padding:2px 100px 5px 30px;
-margin-bottom:-1px;
+padding:0px 7px 4px 27px;
+margin:0px 0px -1px 7px;
 border:1px;
 border-style:solid;
 border-color:#ddd;
+float:right;
     }
-a {
-font-size:0.7em;
-font-weight: 800;
-letter-spacing:0.1em;
-text-transform: uppercase;
-text-decoration:underline;
-color:black;
-    }
-    </style>
     
+.tag {
+font-size:0.7em;
+font-weight:800;
+letter-spacing:0.1em;
+text-transform:uppercase;
+text-decoration:underline;
+    }
+    
+.date {
+    margin: 0px 0px 15px 18px;
+    }
+    
+</style>    
 </head>
 
 <body>
-
-<div class="mail">
-
-<div class="text">
-<h4>Résidence de La Linéa à Capdenac</h4>
-<ul> 
-<li class=tags><a href="#">Derrière le hublot</a></li>
-<li class=tags><a href="#">Processus</a></li>
-<li class=tags><a href="#">Étape de travail</a></li>
-</ul> 
-<br />
-julieroy@extrapole.eu <julieroy@extrapole.eu><br />
-16:09 (1 hour ago)<br />
-<br />
-Changement de décor pour la structure phénomène...<br />
-Les toutes premières images, en attendant la suite.<br />
-Le bonjour à vous tous.<br />
-Molia
-</div>
-
-<img src="images/P1070718.JPG" width=300px>
-<img src="images/P1070721.JPG" width=300px>
-</div>
 
 <div class="logo">
 <img src="images/extrapole-logo.png" width=180px>
 </div>
 
-<div class="bg">
-<img src="criteres.png" width=900px>
+<div class="presentation">
+<h1>Présentation</h1>
+<p>Ici pourra venir se loger la présentation d'Extrapole.</p>
+</div>
+
+<div class="agenda">
+<h1>Agenda</h1>
+<p>Et ici pourra venir se loger l'agenda.</p>
+</div>
+
+<div class="mail">
+<div class="text">
+<h2>Résidence de La Linéa à Capdenac</h2>
+
+<ul> 
+<li class=tag><a href="#">Derrière le hublot</a></li>
+<li class=tag><a href="#">Processus</a></li>
+<li class=tag><a href="#">Étape de travail</a></li>
+</ul> 
+
+<p class="recipient">→ julieroy@extrapole.eu <julieroy@extrapole.eu></p>
+<p class="date">15 mars 2013 ⌚ 16:09</p>
+<p>
+Changement de décor pour la structure phénomène...<br />
+Les toutes premières images, en attendant la suite.<br />
+Le bonjour à vous tous.<br />
+Molia
+</p>
+</div>
+
+<div class="media">
+<img src="images/P1070718.JPG" width=300px>
+<img src="images/P1070721.JPG" width=300px>
+</div>
+
 </div>
 
 </body>
