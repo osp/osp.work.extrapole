@@ -112,14 +112,14 @@ class Message(object):
         addr = paddr[0]
         if not addr:
             addr = paddr[1].split('@')[0]
-        response['to'] = addr[0]
+        response['to'] = addr
         
     def parse_sender(self,  message , msg_key, response):
         paddr = parseaddr(self.get_header('From', message))
         addr = paddr[0]
         if not addr:
             addr = paddr[1].split('@')[0]
-        response['from'] = addr[0]
+        response['from'] = addr
         
     def parse_date(self, message , msg_key, response):
         d = self.get_header('Date', message)
