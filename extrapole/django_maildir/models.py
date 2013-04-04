@@ -11,6 +11,7 @@
 
 import os
 from mailbox import Maildir, MaildirMessage
+import codecs
 
 import logging
 logger = logging.getLogger(__name__)
@@ -26,6 +27,7 @@ class Message(object):
     
     def __init__(self):
         self.maildirs = {}
+        self.codecs = {}
         
         mailboxes = PostfixMailbox.objects.all()
         for mb in mailboxes:
@@ -50,9 +52,17 @@ class Message(object):
         for part in message.walk():
             T = part.get_content_maintype()
             if T == 'multipart':
-                ret['body'].append({'type':part.get_content_type(), 'payload': ''})
+                continue
+                #ret['body'].append({'type':part.get_content_type(), 'payload': ''})
             elif T == 'text':
-                ret['body'].append({'type':part.get_content_type(), 'payload': part.get_payload(decode=True)})
+                charset = part.get_charsets()[0]
+                if charset is None:
+                    charset = 'ascii'
+                text = part.get_payload(decode=True)
+                if charset not in self.codecs:
+                    self.codecs[charset] = codecs.getdecoder(charset)
+                utext, count = self.codecs[charset](text)
+                ret['body'].append({'type':part.get_content_type(), 'payload':utext })
             else:
                 ret['body'].append({'type':part.get_content_type(), 'payload': part.get_filename()})
                 
