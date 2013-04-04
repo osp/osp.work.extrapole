@@ -103,11 +103,15 @@ class Message(object):
             else:
                 response['body'].append({
                     'type':part.get_content_type(),
-                    'payload': msg_key.file_url( part.get_filename() )
+                    'payload': msg_key.file_url( part.get_filename() ),
+                    'filename': part.get_filename()
                     })
     
     def parse_recipient(self,  message , msg_key, response):
-        response['to'] = self.get_header('To', message)
+        response['to'] = self.get_header('To', message).split('@')[0]
+        
+    def parse_sender(self,  message , msg_key, response):
+        response['from'] = self.get_header('From', message).split('@')[0]
         
     def parse_date(self, message , msg_key, response):
         d = self.get_header('Date', message)
@@ -118,7 +122,7 @@ class Message(object):
     
     def message_prepare(self, message , msg_key):
         ret = {}
-        parts = ['subject', 'body', 'recipient', 'date']
+        parts = ['subject', 'body', 'recipient', 'date', 'sender']
         for part in parts:
             getattr(self, '_'.join(['parse',part]))(message, msg_key, ret)
         return ret 
