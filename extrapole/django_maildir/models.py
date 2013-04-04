@@ -12,6 +12,10 @@
 import os
 from mailbox import Maildir, MaildirMessage
 from email.header import decode_header
+from email.utils import parsedate_tz, mktime_tz
+from django.utils import formats
+import datetime
+import time
 import codecs
 
 import logging
@@ -68,12 +72,15 @@ class Message(object):
         u, c = self.codecs[charset](text)
         return u
         
+    def get_header(self, header, message):
+        raw_header = decode_header(message.get(header, 'No %s'%header))
+        header_parts = []
+        for decoded_string, charset in raw_header:
+            header_parts.append(self.mail_decode(decoded_string, charset))
+        return  u' '.join(header_parts)
+        
     def parse_subject(self,  message , msg_key, response):
-        raw_subject = decode_header(message.get('Subject', 'No Subject'))
-        subject_parts = []
-        for decoded_string, charset in raw_subject:
-            subject_parts.append(self.mail_decode(decoded_string, charset))
-        subject = u' '.join(subject_parts)
+        subject = self.get_header('Subject', message)
         subject_list = subject.split('#')
         response['subject'] = subject_list.pop(0)
         response['tags'] = []
@@ -99,9 +106,19 @@ class Message(object):
                     'payload': msg_key.file_url( part.get_filename() )
                     })
     
+    def parse_recipient(self,  message , msg_key, response):
+        response['to'] = self.get_header('To', message)
+        
+    def parse_date(self, message , msg_key, response):
+        d = self.get_header('Date', message)
+        date_tuple = parsedate_tz(d)
+        date = datetime.datetime.fromtimestamp(mktime_tz(date_tuple))
+        response['date'] = formats.date_format(date, 'DATE_FORMAT')
+        response['time'] = formats.date_format(date, 'TIME_FORMAT')
+    
     def message_prepare(self, message , msg_key):
         ret = {}
-        parts = ['subject', 'body']
+        parts = ['subject', 'body', 'recipient', 'date']
         for part in parts:
             getattr(self, '_'.join(['parse',part]))(message, msg_key, ret)
         return ret 
