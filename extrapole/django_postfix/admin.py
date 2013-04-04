@@ -28,7 +28,7 @@ class PostfixUserAdmin(admin.ModelAdmin):
     list_filter = ('domain',)
     search_fields = ['name',]
     fieldsets = [
-            (None, {'fields':('name','domain')}),
+            (None, {'fields':(('name','domain'),'status')}),
             ]
     
 
