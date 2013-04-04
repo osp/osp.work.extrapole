@@ -44,10 +44,27 @@ class Message(object):
         ret['subject'] = subject_list.pop(0)
         ret['tags'] = []
         for t in subject_list:
-            ret['tags'].append(t)
-        ret['body'] = message.get_payload()
+            ret['tags'].append(t.strip())
+            
+        ret['body'] = []
+        for part in message.walk():
+            T = part.get_content_maintype()
+            if T == 'multipart':
+                ret['body'].append({'type':part.get_content_type(), 'payload': ''})
+            elif T == 'text':
+                ret['body'].append({'type':part.get_content_type(), 'payload': part.get_payload(decode=True)})
+            else:
+                ret['body'].append({'type':part.get_content_type(), 'payload': part.get_filename()})
+                
         return ret 
         
+    def get_file(self, mailbox, key, filename):
+        mb, domain = list(mailbox.split('@'))
+        md = self.maildirs[domain][mb]
+        message = md.get(key)
+        for part in message.walk():
+            if filename == part.get_filename():
+                return {'mimetype':part.get_content_type(), 'data':part.get_payload(decode=True)}
                 
     def get_all(self):
         ret = []

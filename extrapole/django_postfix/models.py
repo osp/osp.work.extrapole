@@ -26,6 +26,7 @@ class PostfixDomain(models.Model):
     
     # Anything else should be optional
     
+    
     def __unicode__(self):
         return self.name
 
@@ -54,5 +55,23 @@ class PostfixMailbox(models.Model):
         
     def __unicode__(self):
         return '%s@%s'%(self.name, self.domain.name)
+        
+        
+class PostfixUser(models.Model):
+    """
+        Manage postfix authorized senders
+        
+    """
+    class Meta:
+        verbose_name = _("Contributor")
+        verbose_name_plural = _("Contributors")
+    
+    name = models.CharField(max_length=512)
+    domain = models.ForeignKey('PostfixDomain', related_name='contributors')
+    
+    def __unicode__(self):
+        return '%s@%s'%(self.name, self.domain.name)
+        
+        
         
         
