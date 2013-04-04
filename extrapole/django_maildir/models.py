@@ -11,6 +11,7 @@
 
 import os
 from mailbox import Maildir, MaildirMessage
+from email.header import decode_header
 import codecs
 
 import logging
@@ -40,32 +41,45 @@ class Message(object):
             except Exception as e:
                 logger.error(e)
                 
-    def message_prepare(self, message):
-        ret = {}
-        subject_list = message.get('Subject', 'No Subject').split('#')
-        ret['subject'] = subject_list.pop(0)
-        ret['tags'] = []
+                
+    def mail_decode(self, text, charset):
+        if charset is None:
+            charset = 'us-ascii'
+        if charset not in self.codecs:
+            self.codecs[charset] = codecs.getdecoder(charset)
+        u, c = self.codecs[charset](text)
+        return u
+        
+    def parse_subject(self, message, response):
+        raw_subject = decode_header(message.get('Subject', 'No Subject'))
+        subject_parts = []
+        for decoded_string, charset in raw_subject:
+            subject_parts.append(self.mail_decode(decoded_string, charset))
+        subject = u' '.join(subject_parts)
+        subject_list = subject.split('#')
+        response['subject'] = subject_list.pop(0)
+        response['tags'] = []
         for t in subject_list:
-            ret['tags'].append(t.strip())
+            response['tags'].append(t.strip())
             
-        ret['body'] = []
+    def parse_body(self, message, response):
+        response['body'] = []
         for part in message.walk():
             T = part.get_content_maintype()
             if T == 'multipart':
                 continue
-                #ret['body'].append({'type':part.get_content_type(), 'payload': ''})
             elif T == 'text':
                 charset = part.get_charsets()[0]
-                if charset is None:
-                    charset = 'ascii'
                 text = part.get_payload(decode=True)
-                if charset not in self.codecs:
-                    self.codecs[charset] = codecs.getdecoder(charset)
-                utext, count = self.codecs[charset](text)
-                ret['body'].append({'type':part.get_content_type(), 'payload':utext })
+                response['body'].append({'type':part.get_content_type(), 'payload':self.mail_decode(text, charset)})
             else:
-                ret['body'].append({'type':part.get_content_type(), 'payload': part.get_filename()})
-                
+                response['body'].append({'type':part.get_content_type(), 'payload': part.get_filename()})
+    
+    def message_prepare(self, message):
+        ret = {}
+        parts = ['subject', 'body']
+        for part in parts:
+            getattr(self, '_'.join(['parse',part]))(message, ret)
         return ret 
         
     def get_file(self, mailbox, key, filename):
