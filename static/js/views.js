@@ -23,7 +23,6 @@ app.MessageView = Backbone.View.extend({
         return this;
     },
     toggle: function(evt){
-        console.log('T');
         var body = this.$el.find('.message-body');
         if(this.selected)
         {
@@ -42,15 +41,12 @@ app.AppView = Backbone.View.extend({
     initialize: function() {
         this.$maildir = $('<div id="maildir" />');
         app.Messages = new app.MessageList();
-        this.listenTo(app.Messages, 'add', this.addOne);
-        this.listenTo(app.Messages, 'reset', this.addAll);
         
-        // New
-        this.listenTo(app.Messages, 'change:completed', this.filterOne);
-        this.listenTo(app.Messages, 'filter', this.filterAll);
+//         this.listenTo(app.Messages, 'add', this.addOne);
+        this.listenTo(app.Messages, 'reset', this.addAll);
         this.listenTo(app.Messages, 'all', this.render);
         
-        app.Messages.fetch();
+        app.Messages.fetch({reset: true});
     },
     render: function() {
         this.$el.append(this.$maildir);
@@ -65,14 +61,5 @@ app.AppView = Backbone.View.extend({
         this.$maildir.html('');
         app.Messages.each(this.addOne, this);
     },
-    
-    // New
-    filterOne : function (message) {
-        message.trigger('visible');
-    },
-    
-    // New
-    filterAll : function () {
-        app.Messages.each(this.filterOne, this);
-    },
+
 });

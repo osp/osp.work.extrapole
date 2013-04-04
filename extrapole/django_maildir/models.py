@@ -124,9 +124,11 @@ class Message(object):
     def parse_date(self, message , msg_key, response):
         d = self.get_header('Date', message)
         date_tuple = parsedate_tz(d)
-        date = datetime.datetime.fromtimestamp(mktime_tz(date_tuple))
+        timestamp = mktime_tz(date_tuple)
+        date = datetime.datetime.fromtimestamp(timestamp)
         response['date'] = formats.date_format(date, 'DATE_FORMAT')
         response['time'] = formats.date_format(date, 'TIME_FORMAT')
+        response['timestamp'] = timestamp
     
     def message_prepare(self, message , msg_key):
         ret = {}
