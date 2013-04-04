@@ -109,11 +109,11 @@ class Message(object):
     
     def parse_recipient(self,  message , msg_key, response):
         addr = parseaddr(self.get_header('To', message))
-        response['to'] = addr(0)
+        response['to'] = addr[0]
         
     def parse_sender(self,  message , msg_key, response):
         addr = parseaddr(self.get_header('From', message))
-        response['from'] = addr(0)
+        response['from'] = addr[0]
         
     def parse_date(self, message , msg_key, response):
         d = self.get_header('Date', message)
