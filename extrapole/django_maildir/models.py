@@ -12,7 +12,7 @@
 import os
 from mailbox import Maildir, MaildirMessage
 from email.header import decode_header
-from email.utils import parsedate_tz, mktime_tz
+from email.utils import parsedate_tz, mktime_tz, parseaddr
 from django.utils import formats
 import datetime
 import time
@@ -108,10 +108,12 @@ class Message(object):
                     })
     
     def parse_recipient(self,  message , msg_key, response):
-        response['to'] = self.get_header('To', message).split('@')[0]
+        addr = parseaddr(self.get_header('To', message))
+        response['to'] = addr(0)
         
     def parse_sender(self,  message , msg_key, response):
-        response['from'] = self.get_header('From', message).split('@')[0]
+        addr = parseaddr(self.get_header('From', message))
+        response['from'] = addr(0)
         
     def parse_date(self, message , msg_key, response):
         d = self.get_header('Date', message)
