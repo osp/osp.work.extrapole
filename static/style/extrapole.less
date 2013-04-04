@@ -11,6 +11,9 @@
     src:url('./NewsCycle-Bold.ttf');
 }
 
+@lightgrey:#ddd;
+@darkgrey:#555;
+
 *{
     border:none;
     padding:0;
@@ -18,39 +21,38 @@
     font-family: 'News Cycle', sans-serif;
 }
  
- body {
-     margin:10px 20px 20px 20px;
+body {
+    margin:10px 20px 20px 20px;
+}
+ 
+.logo {
+    margin:0px 0px 32px -6px;
+}
+ 
+.boxed(@base:6px){
+    border:1px solid @lightgrey;
+    margin:@base;
+    padding:@base * 2;
  }
  
-.presentation, .agenda {
-     border:1px;
-     border-style:solid;
-     border-color:#ddd;
-     margin:0px 5px -1px 5px;
-     padding:0px 10px 10px 10px;
- }
- 
- .logo {
-     margin:0px 0px 32px -6px;
- }
- 
+
 #maildir{
+    .boxed;
     position:absolute;
     right:20px;
     top:20px;
-    width:30%;
+    width:45%;
     height:90%;
     overflow-y:auto;
-    border:1px solid #ddd;
-    padding:10px;
+/*     background-color:@lightgrey; */
+    
     .mail-box {
-        border:1px solid #ddd;
-        margin:0px 5px -1px 5px;
-        padding:0px 10px 10px 10px;
+        .boxed(3px);
+        background-color:white;
         .mail-header{
             
             .mail-title{
-                font-size:1em;
+                font-size:1.8em;
                 font-weight: 400;
                 line-height:1.15em;
                 color:black;
@@ -65,6 +67,7 @@
             
             .mail-tag-box{
                 .mail-tag {
+                    .boxed(2px);
                     font-size:0.7em;
                     font-weight:800;
                     letter-spacing:0.1em;
@@ -75,69 +78,24 @@
         }
         
         .message-body{
+            border-top:1px solid @lightgrey;
+            margin:6px 0;
+            padding:6px 0;
             display:none;
         }
     }
  }
  
- .presentation {
-     float:left;
-     width:450px;
-     height:500px;
- }
+#about-box{
+    .boxed;
+    width:45%;
+    
+}
+#agenda-box{
+    .boxed;
+    width:45%;
+    
+}
+
  
- .agenda {
-     float:left;
-     height:600px;
- }
- 
- .media {
-     margin:10px 0px 0px 0px;
- }
- 
- h1, h2, p, a, .text, .recipient, .date {
-     font-family: 'News Cycle', sans-serif;
-     font-size:1em;
-     font-weight: 400;
-     line-height:1.15em;
-     color:black;
-     -webkit-margin-before: 0em;
-     -webkit-margin-after: 0.2em;
- }
- 
- h1 {
-     font-size:1.8em;
- }
- 
- h2 {
-     font-size:1.5em;
-     -webkit-margin-before: 0.2em;
- }
- 
- ul {
-     list-style-type: none;
-     padding:0px 0px 0px 10px;
- }
- 
- ul li:before {
-     content: "";
-     margin:0px 0px 0px -20px;
-     font-size:1em;
-     color:#ddd;
- }
- 
- li {
-     padding:0px 7px 4px 27px;
-     margin:0px 0px -1px 7px;
-     border:1px;
-     border-style:solid;
-     border-color:#ddd;
-     float:right;
- }
- 
- 
- 
- .date {
-     margin: 0px 0px 15px 18px;
- }
  
