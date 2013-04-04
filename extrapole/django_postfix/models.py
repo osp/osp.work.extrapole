@@ -57,6 +57,7 @@ class PostfixMailbox(models.Model):
         return '%s@%s'%(self.name, self.domain.name)
         
         
+
 class PostfixUser(models.Model):
     """
         Manage postfix authorized senders
@@ -65,9 +66,14 @@ class PostfixUser(models.Model):
     class Meta:
         verbose_name = _("Contributor")
         verbose_name_plural = _("Contributors")
+        
+    OK = 'OK'
+    REJECT = 'REJECT'
+    POSTFIX_SENDER_STATUS = ( (OK, 'Authorize'), (REJECT, 'Reject'), )
     
     name = models.CharField(max_length=512)
     domain = models.ForeignKey('PostfixDomain', related_name='contributors')
+    status = models.CharField(max_length=6, choices=POSTFIX_SENDER_STATUS, default=OK)
     
     def __unicode__(self):
         return '%s@%s'%(self.name, self.domain.name)
