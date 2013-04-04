@@ -20,6 +20,24 @@ logger = logging.getLogger(__name__)
 from django_postfix.models import PostfixMailbox
 from settings import POSTFIX_VIRTUAL_MAILBOX_BASE
 
+class MessageKey(object):
+    def __init__(self, domain, mailbox, key):
+        self.domain = domain
+        self.mailbox = mailbox
+        self.key = key
+        
+    def file_url(self, fn, proto='http'):
+        parts = [
+            '%s://'%proto, 
+            self.domain, 
+            'maildir', 
+            'file', 
+            '%s@%s'%(self.mailbox, self.domain), 
+            self.key, 
+            fn
+            ]
+        url = '/'.join(parts)
+        return url
 
 class Message(object):
     """
@@ -50,7 +68,7 @@ class Message(object):
         u, c = self.codecs[charset](text)
         return u
         
-    def parse_subject(self, message, response):
+    def parse_subject(self,  message , msg_key, response):
         raw_subject = decode_header(message.get('Subject', 'No Subject'))
         subject_parts = []
         for decoded_string, charset in raw_subject:
@@ -62,7 +80,7 @@ class Message(object):
         for t in subject_list:
             response['tags'].append(t.strip())
             
-    def parse_body(self, message, response):
+    def parse_body(self, message , msg_key, response):
         response['body'] = []
         for part in message.walk():
             T = part.get_content_maintype()
@@ -71,15 +89,21 @@ class Message(object):
             elif T == 'text':
                 charset = part.get_charsets()[0]
                 text = part.get_payload(decode=True)
-                response['body'].append({'type':part.get_content_type(), 'payload':self.mail_decode(text, charset)})
+                response['body'].append({
+                    'type':part.get_content_type(), 
+                    'payload':self.mail_decode(text, charset)
+                    })
             else:
-                response['body'].append({'type':part.get_content_type(), 'payload': part.get_filename()})
+                response['body'].append({
+                    'type':part.get_content_type(),
+                    'payload': msg_key.file_url( part.get_filename() )
+                    })
     
-    def message_prepare(self, message):
+    def message_prepare(self, message , msg_key):
         ret = {}
         parts = ['subject', 'body']
         for part in parts:
-            getattr(self, '_'.join(['parse',part]))(message, ret)
+            getattr(self, '_'.join(['parse',part]))(message, msg_key, ret)
         return ret 
         
     def get_file(self, mailbox, key, filename):
@@ -96,7 +120,7 @@ class Message(object):
             for mailbox in self.maildirs[domain]:
                 md = self.maildirs[domain][mailbox]
                 for (k,m) in md.iteritems():
-                    mp = self.message_prepare(m)
+                    mp = self.message_prepare(m, MessageKey(domain, mailbox, k))
                     mp['mailbox'] = '%s@%s'%(mailbox, domain)
                     mp['key'] = k
                     ret.append(mp)

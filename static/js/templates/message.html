@@ -16,7 +16,7 @@
         <p><%= part.payload %></p>
         <% } %>
         <% if(part.type.split('/')[0] === 'image'){ %>
-        <img src="/maildir/file/<%= message.mailbox %>/<%= message.key %>/<%= part.payload %>" />
+        <img src="<%= part.payload %>" />
         <% } %>
     <% }); %>
     </div>
