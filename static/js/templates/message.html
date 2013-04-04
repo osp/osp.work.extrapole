@@ -1,10 +1,15 @@
 <div class="mail-box">
-    <div class="mail-title">
-        <a href="/maildir/<%= message.mailbox %>/<%= message.key %>"><%= message.subject %></a>
-    </div>
-    <% _.each( message.tags, function( tag ){  %>
+    <div class="mail-header">
+    <div class="mail-title"><%= message.subject %></div>
+    <div class="mail-recipient">→ <%= message.recipient %></div>
+    <div class="mail-date"><%= message.date %> ⌚ <%= message.time %></div>
+        <div class="mail-tag-box">
+        <% _.each( message.tags, function( tag ){  %>
         <span class="tag"><%= tag %></span>
-    <% }); %>
+        <% }); %>
+        </div>
+    </div>
+    
     <div class="message-body">
     <% _.each(message.body, function(part){ %>
         <% if(part.type.split('/')[0] === 'text'){ %>

@@ -11,6 +11,10 @@ app.MessageView = Backbone.View.extend({
 //         Backbone.View.apply(this, arguments);
 //         this.listenTo(this.model, 'change', this.render);
 //     },
+    selected : false,
+    events:{
+        'click .mail-title': 'toggle',
+    },
     render: function() {
         var data = this.model.toJSON();
         template.render('message', this.$el, function(t){
@@ -18,6 +22,19 @@ app.MessageView = Backbone.View.extend({
         });
         return this;
     },
+    toggle: function(evt){
+        console.log('T');
+        var body = this.$el.find('.message-body');
+        if(this.selected)
+        {
+            body.hide();
+        }
+        else
+        {
+            body.show();
+        }
+        this.selected = !this.selected;
+    }
 });
 
 app.AppView = Backbone.View.extend({
