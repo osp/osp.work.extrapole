@@ -1,0 +1,101 @@
+
+@font-face{
+    font-family: 'News Cycle';
+    font-weight:normal;
+    src:url('./NewsCycle-Regular.ttf');
+}
+
+@font-face{
+    font-family: 'News Cycle';
+    font-weight:bold;
+    src:url('./NewsCycle-Bold.ttf');
+}
+
+@lightgrey:#ddd;
+@darkgrey:#555;
+
+*{
+    border:none;
+    padding:0;
+    margin:0;
+    font-family: 'News Cycle', sans-serif;
+}
+ 
+body {
+    margin:10px 20px 20px 20px;
+}
+ 
+.logo {
+    margin:0px 0px 32px -6px;
+}
+ 
+.boxed(@base:6px){
+    border:1px solid @lightgrey;
+    margin:@base;
+    padding:@base * 2;
+ }
+ 
+
+#maildir{
+    .boxed;
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:45%;
+    height:90%;
+    overflow-y:auto;
+/*     background-color:@lightgrey; */
+    
+    .mail-box {
+        .boxed(3px);
+        background-color:white;
+        .mail-header{
+            
+            .mail-title{
+                font-size:1.8em;
+                font-weight: 400;
+                line-height:1.15em;
+                color:black;
+                -webkit-margin-before: 0em;
+                -webkit-margin-after: 0.2em;
+                
+                cursor:pointer;
+                &:hover{
+                    color:#999;
+                }
+            }
+            
+            .mail-tag-box{
+                .mail-tag {
+                    .boxed(2px);
+                    font-size:0.7em;
+                    font-weight:800;
+                    letter-spacing:0.1em;
+                    text-transform:uppercase;
+                    text-decoration:underline;
+                }
+            }
+        }
+        
+        .message-body{
+            border-top:1px solid @lightgrey;
+            margin:6px 0;
+            padding:6px 0;
+            display:none;
+        }
+    }
+ }
+ 
+#about-box{
+    .boxed;
+    width:45%;
+    
+}
+#agenda-box{
+    .boxed;
+    width:45%;
+    
+}
+
+ 
+ 

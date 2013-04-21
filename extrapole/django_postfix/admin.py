@@ -20,10 +20,19 @@ class PostfixMailboxAdmin(admin.ModelAdmin):
     list_filter = ('domain',)
     search_fields = ['name',]
     fieldsets = [
-            (None, {'fields':('name','domain')}),
+            (None, {'fields':('name','domain',)}),
+            ]
+            
+class PostfixUserAdmin(admin.ModelAdmin):
+    list_display = ('name', 'domain')
+    list_filter = ('domain',)
+    search_fields = ['name',]
+    fieldsets = [
+            (None, {'fields':(('name','domain'),'status')}),
             ]
     
 
     
 admin.site.register(PostfixDomain, PostfixDomainAdmin)
 admin.site.register(PostfixMailbox, PostfixMailboxAdmin)
+admin.site.register(PostfixUser, PostfixUserAdmin)
