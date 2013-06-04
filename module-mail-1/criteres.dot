@@ -1,0 +1,40 @@
+digraph
+{
+
+//rankdir=LR;
+//page="16.5,11.7";
+//ratio="compress";
+//ratio=auto;
+//648 cm en longueur (pour rentrer dans Le cadre du trou) - 270 pour arriver au sol depuis poutre - donc avec 320cm en largeur ça bailLe bien au sol comme je voudrais à priori
+//size="255,126";
+//ratio=0.5;
+//labelfloat=true;
+//nodesep=0.28;
+//ranksep=0.28;
+//sep=0.28;
+//overlap="compress";
+//node [shape=none, fontsize=20, fontname=OpenDinCrunched, margin=0.2,2];
+//edge [arrowhead=lnormal, arrowsize=0.8];
+
+"partenaire" [pos="10,10"];
+    
+"dialogue\nlong"->"historique"->"délitement";
+"publié\nou\nnon";
+"nécessite\nanalyse"->"extérieur"->"partenaire";
+"signature"->"header";
+"interne"->"externe";
+"newsletter\ntierce"->"un\njournaliste\nécrit,\ndistance"->"html"->"pdf\nou\nlien";
+"partenaire"->"thématique";
+"regard\nextérieur"->"feed-back"->"accord\nde\npublication\ndes\npartenaires";
+"fiche\ntechnique"->"espace\npublic"->"japon"->"partenaire";
+"pdf\n+\ninfo\ndate\nlieu"->"partenaire";
+"partenaires\npotentiels"->"communauté\nd'esprit";
+"diagramme"->"cartographie"->"orienté\nà partir\nd'un point\nde vue";
+"évènement"->"agenda"->"partenaire";
+"multilingue"->"bilingue";
+"auteur\ndu\nmail"->"thématique";
+"images"->"sons"->"vidéos"->"galerie"->"partenaire"->"artiste";
+"newsletter\nd'artiste"->"interne";
+"newsletter\nextrapole"->"archive";
+"publication\nprécoce"->"en\ncours"->"finalisé"
+};

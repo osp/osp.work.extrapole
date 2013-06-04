@@ -1,0 +1,23 @@
+9h30 - captation
+
+- location d'un serveur sur ovh
+- mise en place du mx
+                                             - passer à travers le site existant
+                                             - mails très divers pour pointer des choses intéressantes à publier + taxonomie
+- install serveur mail + django
+                                             - mise en place d'une adresse test gmail et tests
+- développement du parser
+
+(Repas)
+
+14h00 - restitution
+
+- test du parser
+                                             - rassemblement et organisation de documents/fichiers/mails + envois
+- tests captation
+                                             - autres envois, autres tests, visualisations
+- tests réception
+                                             - autres visualisations + prise de note des besoins futurs
+- compilation des besoins futurs 
+
+Plus tard : mailman + pages + ...
